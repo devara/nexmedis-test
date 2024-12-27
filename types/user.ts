@@ -26,13 +26,14 @@ export interface LoginResponse {
 }
 
 export type UserGender = 'MALE' | 'FEMALE'
+export type UserStatus = 'ACTIVE' | 'INACTIVE' | 'BLOCKED'
 
 export interface User {
   _id: string,
   name: string,
   username: string,
   email: string,
-  status: string,
+  status: UserStatus,
   gender?: UserGender,
   signUpFrom: string,
   signUpDate: string,

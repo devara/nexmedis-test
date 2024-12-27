@@ -9,11 +9,13 @@ export interface TaskUpdatePayload {
   status?: string,
 }
 
-export interface TaskResponse {
+export type TaskStatus = 'DONE' | 'HOLD' | 'ONGOING' | 'CANCEL'
+
+export interface UserTask {
   _id: string,
   title: string,
   description: string,
-  status: string,
+  status: TaskStatus,
   createdAt: string,
   by: {
     name: string,

@@ -9,7 +9,7 @@ export default defineNuxtModule({
     name     : 'auth',
     configKey: 'auth',
   },
-  setup (resolvedOptions, nuxt) {
+  setup () {
     const { resolve } = createResolver(import.meta.url)
 
     addServerHandler({ route: '/auth/logout', handler: resolve('./logout') })

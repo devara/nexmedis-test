@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default defineNuxtRouteMiddleware(async (to, from) => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const event = useRequestEvent()
   if (event) {
     const { token, isAlmostExpired, refresh } = useAuth()

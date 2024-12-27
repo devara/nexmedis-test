@@ -5,6 +5,7 @@ import type {
   RegisterPayload,
   UpdateProfilePayload,
   UpdateUsernamePayload,
+  User,
 } from '~/types/user'
 
 const callApi = () => {
@@ -21,7 +22,7 @@ export const userRepository = {
     return await callApi().post('/auth/register', payload)
   },
 
-  async getProfile () {
+  async getProfile (): Promise<AxiosResponse<User>> {
     return await callApi().get('/user/profile')
   },
 

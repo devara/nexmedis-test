@@ -1,4 +1,9 @@
-import type { TaskCreatePayload, TaskUpdatePayload } from '~/types/task'
+import type { ApiResponsePaging } from '~/types'
+import type {
+  TaskCreatePayload,
+  TaskUpdatePayload,
+  UserTask,
+} from '~/types/task'
 
 const callApi = () => {
   const { $api } = useNuxtApp()
@@ -6,7 +11,7 @@ const callApi = () => {
 }
 
 export const taskRepository = {
-  async get () {
+  async get (): Promise<{ data: UserTask[], meta: ApiResponsePaging }> {
     return await callApi().get('/task/list')
   },
 
