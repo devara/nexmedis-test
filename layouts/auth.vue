@@ -8,7 +8,7 @@
           Selamat Datang!
         </h1>
         <p class="text-lg">
-          Bergabunglah dengan komunitas kami dan nikmati berbagai fitur menarik.
+          Silakan mendaftar atau login jika sudah punya akun.
         </p>
       </div>
     </div>
