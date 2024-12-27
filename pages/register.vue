@@ -1,0 +1,94 @@
+<template>
+  <div class="w-full max-w-md px-4 py-3 bg-white rounded-lg shadow-lg md:px-8">
+    <h2 class="mb-6 text-2xl font-bold text-center text-gray-700">
+      Register
+    </h2>
+    <form @submit.prevent="doRegister">
+      <div class="mb-4">
+        <label
+          for="name"
+          class="block mb-1 text-sm font-medium text-gray-600">Nama</label>
+        <input
+          id="name"
+          v-model="name"
+          type="text"
+          required
+          class="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+      </div>
+      <div class="mb-4">
+        <label
+          for="email"
+          class="block mb-1 text-sm font-medium text-gray-600">Email</label>
+        <input
+          id="email"
+          v-model="email"
+          type="email"
+          required
+          class="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+      </div>
+      <div class="mb-6">
+        <label
+          for="password"
+          class="block mb-1 text-sm font-medium text-gray-600">Password</label>
+        <input
+          id="password"
+          v-model="password"
+          type="password"
+          required
+          class="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+      </div>
+      <button
+        type="submit"
+        class="w-full py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600">
+        Register
+      </button>
+    </form>
+    <p class="mt-4 text-sm text-center text-gray-600">
+      Sudah punya akun?
+      <NuxtLink
+        to="/login"
+        class="text-green-500 hover:underline">
+        Masuk di sini
+      </NuxtLink>.
+    </p>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { userRepository } from '~/repository/modules/user'
+
+definePageMeta({ layout: 'auth' })
+
+const name     = ref<string>('')
+const email    = ref<string>('')
+const password = ref<string>('')
+
+async function doRegister () {
+  try {
+    const response = await userRepository.register(
+      {
+        name    : name.value,
+        email   : email.value,
+        password: password.value,
+      },
+    )
+
+    if (response.data.accessToken) {
+      const {
+        accessToken,
+        refreshToken,
+        expiresIn,
+        tokenType,
+      } = response.data
+      return navigateTo({
+        path : '/auth/login',
+        query: {
+          accessToken, refreshToken, expiresIn, tokenType,
+        },
+      }, { external: true })
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+</script>
