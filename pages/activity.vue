@@ -28,6 +28,12 @@
         </table>
       </div>
     </Card>
+
+    <Pagination
+      v-model:page-value="pageMeta.page"
+      v-model:per-page-value="pageMeta.per_page"
+      :total="pageMeta.total"
+      :total-page="pageMeta.total_pages" />
   </div>
 </template>
 
@@ -40,21 +46,39 @@ import type { UserActivity } from '~/types/activity'
 const activities = ref<UserActivity[]>([])
 
 const pageMeta = ref<ApiResponsePaging>({
-  page      : 1,
-  per_page  : 10,
-  total     : 0,
-  total_page: 1,
+  page       : 1,
+  per_page   : 10,
+  total      : 0,
+  total_pages: 1,
 })
 
 async function getActivities () {
   try {
-    const response   = await activityRepository.get()
+    const response   = await activityRepository.get({
+      params: {
+        page    : pageMeta.value.page,
+        per_page: pageMeta.value.per_page,
+      },
+    })
     activities.value = response.data ?? []
     pageMeta.value   = response.meta ?? undefined
   } catch (error) {
     console.error(error)
   }
 }
+
+const currentPage    = computed(() => pageMeta.value.page)
+const currentPerPage = computed(() => pageMeta.value.per_page)
+
+watch(currentPage, async (current, old) => {
+  if (current !== old)
+    await getActivities()
+})
+
+watch(currentPerPage, async (current, old) => {
+  if (current !== old)
+    await getActivities()
+})
 
 onMounted(async () => {
   await getActivities()

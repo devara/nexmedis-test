@@ -2,13 +2,24 @@
   <div class="grid grid-cols-12 gap-6">
     <Card class="col-span-12">
       <div class="flex items-center mx-auto space-x-4">
-        <UserCircleIcon class="size-20" />
+        <UserCircleIcon class="size-40" />
         <div class="flex flex-col space-y-3">
           <span>
             Hello, <strong>{{ user?.name }}</strong>!
           </span>
           <span class="text-xs">
-            Last update: {{ user?.updatedAt }}
+            Last update: {{ format(user?.updatedAt ?? new Date(), 'PPpp') }}
+          </span>
+          <span
+            class="inline-flex items-center px-3 py-1 space-x-1 text-xs text-white rounded-full w-fit"
+            :class="[user?.status === 'ACTIVE' ? 'bg-green-600' : 'bg-red-600']">
+            <CheckBadgeIcon
+              v-if="user?.status === 'ACTIVE'"
+              class="size-5" />
+            <NoSymbolIcon
+              v-else
+              class="size-5" />
+            <strong>{{ user?.status }}</strong>
           </span>
         </div>
       </div>
@@ -84,6 +95,7 @@
 </template>
 
 <script lang="ts" setup>
+import { format } from 'date-fns'
 import {
   type FetchError,
 } from 'ofetch'
@@ -93,6 +105,8 @@ import {
   EnvelopeIcon,
   FaceSmileIcon,
   ArrowPathIcon,
+  CheckBadgeIcon,
+  NoSymbolIcon,
 } from '@heroicons/vue/24/outline'
 import { userRepository } from '~/repository/modules/user'
 import type { UserGender } from '~/types/user'

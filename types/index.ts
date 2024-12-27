@@ -7,5 +7,5 @@ export interface ApiResponsePaging {
   page: number,
   per_page: number,
   total: number,
-  total_page: number,
+  total_pages: number,
 }

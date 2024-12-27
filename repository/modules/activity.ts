@@ -7,7 +7,7 @@ const callApi = () => {
 }
 
 export const activityRepository = {
-  async get (): Promise<{ data: UserActivity[], meta: ApiResponsePaging }> {
-    return await callApi().get('/activity/list')
+  async get (config?: Record<string, unknown>): Promise<{ data: UserActivity[], meta: ApiResponsePaging }> {
+    return await callApi().get('/activity/list', config)
   },
 }

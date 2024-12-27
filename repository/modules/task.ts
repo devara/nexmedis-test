@@ -11,8 +11,8 @@ const callApi = () => {
 }
 
 export const taskRepository = {
-  async get (): Promise<{ data: UserTask[], meta: ApiResponsePaging }> {
-    return await callApi().get('/task/list')
+  async get (config?: Record<string, unknown>): Promise<{ data: UserTask[], meta: ApiResponsePaging }> {
+    return await callApi().get('/task/list', config)
   },
 
   async post (payload: TaskCreatePayload) {
