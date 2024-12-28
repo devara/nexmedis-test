@@ -138,8 +138,10 @@ async function getTasks () {
         per_page: pageMeta.value.per_page,
       },
     })
-    tasks.value    = response.data ?? []
-    pageMeta.value = response.meta ?? undefined
+    if (response.data.length > 0) {
+      tasks.value    = response.data ?? []
+      pageMeta.value = response.meta ?? pageMeta.value
+    }
   } catch (error) {
     console.error(error)
   }

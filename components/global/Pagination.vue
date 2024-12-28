@@ -4,6 +4,7 @@
       <label>Page</label>
       <select
         v-model="page"
+        :disabled="disabled"
         class="items-center px-3 py-2 border rounded-lg">
         <option
           v-for="n in totalPage ?? 2"
@@ -32,6 +33,7 @@
       <label>Per page</label>
       <select
         v-model="perPage"
+        :disabled="disabled"
         class="items-center px-3 py-2 border rounded-lg">
         <option
           v-for="val in [5, 10, 15]"

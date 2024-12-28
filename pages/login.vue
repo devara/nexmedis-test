@@ -28,8 +28,11 @@
       </div>
       <button
         type="submit"
-        class="w-full py-2 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">
-        Login
+        class="inline-flex items-center justify-center w-full py-2 space-x-3 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+        <span>Login</span>
+        <ArrowPathIcon
+          v-if="loading"
+          class="size-4 animate-spin" />
       </button>
     </form>
     <p class="mt-4 text-sm text-center text-gray-600">
@@ -44,6 +47,7 @@
 </template>
 
 <script lang="ts" setup>
+import { ArrowPathIcon } from '@heroicons/vue/24/outline'
 import { userRepository } from '~/repository/modules/user'
 
 definePageMeta({ layout: 'auth' })
@@ -51,8 +55,11 @@ definePageMeta({ layout: 'auth' })
 const email    = ref<string>('')
 const password = ref<string>('')
 
+const loading = ref<boolean>(false)
+
 async function doLogin () {
   try {
+    loading.value  = true
     const response = await userRepository.login(
       {
         email   : email.value,
@@ -76,6 +83,8 @@ async function doLogin () {
     }
   } catch (error) {
     console.error(error)
+  } finally {
+    loading.value = false
   }
 }
 </script>

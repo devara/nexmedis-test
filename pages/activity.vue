@@ -33,7 +33,8 @@
       v-model:page-value="pageMeta.page"
       v-model:per-page-value="pageMeta.per_page"
       :total="pageMeta.total"
-      :total-page="pageMeta.total_pages" />
+      :total-page="pageMeta.total_pages"
+      :disabled="loading" />
   </div>
 </template>
 
@@ -52,8 +53,11 @@ const pageMeta = ref<ApiResponsePaging>({
   total_pages: 1,
 })
 
+const loading = ref<boolean>(false)
+
 async function getActivities () {
   try {
+    loading.value    = true
     const response   = await activityRepository.get({
       params: {
         page    : pageMeta.value.page,
@@ -64,6 +68,8 @@ async function getActivities () {
     pageMeta.value   = response.meta ?? undefined
   } catch (error) {
     console.error(error)
+  } finally {
+    loading.value = false
   }
 }
 
