@@ -3,7 +3,7 @@
     <h4>User Activities</h4>
 
     <Card>
-      <div class="flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2 overflow-x-auto overscroll-contain max-h-[425px] md:max-h-[500px]">
         <table class="activity__table">
           <thead>
             <tr class="bg-neutral-300">
@@ -19,10 +19,18 @@
             <tr
               v-for="(activity, index) in activities"
               :key="index">
-              <td>{{ activity.description }}</td>
-              <td>{{ activity.by.name }}</td>
-              <td>{{ activity.type }}</td>
-              <td>{{ format(activity.createdAt, 'PPpp') }}</td>
+              <td class="min-w-[200px]">
+                {{ activity.description }}
+              </td>
+              <td class="min-w-[175px]">
+                {{ activity.by.name }}
+              </td>
+              <td class="min-w-[100px]">
+                {{ activity.type }}
+              </td>
+              <td class="min-w-[150px]">
+                {{ format(activity.createdAt, 'PPpp') }}
+              </td>
             </tr>
           </tbody>
         </table>

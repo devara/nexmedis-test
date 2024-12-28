@@ -2,7 +2,7 @@
   <div class="flex flex-col space-y-6">
     <h4>User Task</h4>
 
-    <Card class="!flex-row space-x-3 items-end">
+    <Card class="!flex-row gap-3 items-end flex-wrap">
       <Field
         v-model="taskTitle"
         label="task title" />
@@ -26,48 +26,58 @@
 
     <Card>
       <div class="flex flex-col space-y-2">
-        <table class="activity__table">
-          <thead>
-            <tr class="bg-neutral-300">
-              <th>-</th>
-              <th>Title</th>
-              <th>Description</th>
-              <th>By</th>
-              <th>Status</th>
-              <th>
-                Date
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="(task, index) in tasks"
-              :key="index">
-              <td>
-                <div class="inline-flex space-x-3">
-                  <button
-                    @click="doEditTask(task)">
-                    <PencilSquareIcon class="size-4" />
-                  </button>
-                  <button
-                    @click="onDeleteTask(task._id)">
-                    <TrashIcon class="size-4" />
-                  </button>
-                </div>
-              </td>
-              <td>{{ task.title }}</td>
-              <td>{{ task.description }}</td>
-              <td>{{ task.by.name }}</td>
-              <td>
-                <Dropdown
-                  :model-value="task.status"
-                  :options="statusOptions"
-                  @update:model-value="onChangeStatus(task._id, $event)" />
-              </td>
-              <td>{{ format(task.createdAt, 'PPpp') }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="overflow-x-auto overscroll-contain">
+          <table class="w-full activity__table">
+            <thead>
+              <tr class="bg-neutral-300">
+                <th>-</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>By</th>
+                <th>Status</th>
+                <th>
+                  Date
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(task, index) in tasks"
+                :key="index">
+                <td>
+                  <div class="inline-flex space-x-3">
+                    <button
+                      @click="doEditTask(task)">
+                      <PencilSquareIcon class="size-4" />
+                    </button>
+                    <button
+                      @click="onDeleteTask(task._id)">
+                      <TrashIcon class="size-4" />
+                    </button>
+                  </div>
+                </td>
+                <td class="min-w-[175px]">
+                  {{ task.title }}
+                </td>
+                <td class="min-w-[200px]">
+                  {{ task.description }}
+                </td>
+                <td class="min-w-[175px]">
+                  {{ task.by.name }}
+                </td>
+                <td class="min-w-[150px]">
+                  <Dropdown
+                    :model-value="task.status"
+                    :options="statusOptions"
+                    @update:model-value="onChangeStatus(task._id, $event)" />
+                </td>
+                <td class="min-w-[150px]">
+                  {{ format(task.createdAt, 'PPpp') }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <Pagination
           v-model:page-value="pageMeta.page"
