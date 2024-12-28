@@ -12,9 +12,12 @@
         label="task description" />
 
       <button
-        class="flex items-center justify-center h-12 px-2 space-x-3 text-blue-500 border border-blue-500 min-w-20 hover:text-white hover:bg-blue-500"
+        class="flex items-center justify-center h-12 min-w-[150px] px-2 space-x-3 text-blue-500 border border-blue-500 hover:text-white hover:bg-blue-500"
         @click="processActionTask">
         <span>{{ formMode === 'add' ? 'Create' : 'Update' }}</span>
+        <ArrowPathIcon
+          v-if="actionLoading"
+          class="size-5 animate-spin" />
       </button>
       <button
         v-if="formMode === 'edit'"
@@ -93,6 +96,7 @@
 import {
   PencilSquareIcon,
   TrashIcon,
+  ArrowPathIcon,
 } from '@heroicons/vue/24/outline'
 import { taskRepository } from '~/repository/modules/task'
 import type { ApiResponsePaging } from '~/types'
@@ -116,6 +120,8 @@ const pageMeta = ref<ApiResponsePaging>({
 const taskID          = ref<string>()
 const taskTitle       = ref<string>()
 const taskDescription = ref<string>()
+
+const actionLoading = ref<boolean>(false)
 
 const formMode = ref<'add' | 'edit'>('add')
 
@@ -194,6 +200,7 @@ async function processCreateTask () {
     return
 
   try {
+    actionLoading.value = true
     await taskRepository.post({
       title      : taskTitle.value,
       description: taskDescription.value,
@@ -204,6 +211,8 @@ async function processCreateTask () {
     await getTasks()
   } catch (error) {
     console.error(error)
+  } finally {
+    actionLoading.value = false
   }
 }
 
@@ -212,6 +221,7 @@ async function processEditTask () {
     return
 
   try {
+    actionLoading.value = true
     await taskRepository.put(taskID.value, {
       title      : taskTitle.value,
       description: taskDescription.value,
@@ -229,6 +239,8 @@ async function processEditTask () {
     doCancelEdit()
   } catch (error) {
     console.error(error)
+  } finally {
+    actionLoading.value = false
   }
 }
 
