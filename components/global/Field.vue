@@ -14,7 +14,7 @@
       <input
         v-model="model"
         v-bind="$attrs"
-        type="text"
+        :type="type"
         class="w-full h-12 max-w-full px-3 py-2 bg-white border border-gray-700 rounded focus:ring focus:outline-none"
         :class="{
           'pl-10': $slots.icon
@@ -34,6 +34,10 @@ const props = defineProps({
   label: {
     type   : String,
     default: '',
+  },
+  type: {
+    type   : String,
+    default: 'text',
   },
 })
 

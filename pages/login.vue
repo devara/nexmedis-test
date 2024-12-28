@@ -4,31 +4,21 @@
       Login
     </h2>
     <form @submit.prevent="doLogin">
-      <div class="mb-4">
-        <label
-          for="email"
-          class="block mb-1 text-sm font-medium text-gray-600">Email</label>
-        <input
-          id="email"
+      <div class="mb-4 space-y-3">
+        <Field
           v-model="email"
+          label="email"
           type="email"
-          required
-          class="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      </div>
-      <div class="mb-6">
-        <label
-          for="password"
-          class="block mb-1 text-sm font-medium text-gray-600">Password</label>
-        <input
-          id="password"
+          required />
+        <Field
           v-model="password"
+          label="password"
           type="password"
-          required
-          class="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          required />
       </div>
       <button
         type="submit"
-        class="inline-flex items-center justify-center w-full py-2 space-x-3 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+        class="inline-flex items-center justify-center w-full py-3 space-x-3 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">
         <span>Login</span>
         <ArrowPathIcon
           v-if="loading"
